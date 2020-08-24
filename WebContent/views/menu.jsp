@@ -24,11 +24,18 @@
 
 <body class=container>
 	<c:if test="${!empty sessionScope['cliente']}">
-		<table>
+		<table id="menu">
 			<tr>
 				<td>
 					<div class="alert alert-secondary" role="alert">
 						Bem-vindo <c:out value="${sessionScope.cliente.nome}" />. <a href="sair">Sair</a>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<div>
+						<input type="button" value="Mostrar Saldo" class="btn btn-outline-info" onclick="mostrarSaldo()">
 					</div>
 				</td>
 			</tr>
@@ -39,27 +46,29 @@
 	
 	<h1>Menu</h1>
 	
-	<table>
-		<c:if test="${!empty requestScope.status}">
+	<c:if test="${!empty requestScope.status}">
+		<table>
 			<tr>
 				<td class="center-align">
-				<c:if test="${requestScope.status eq('ok')}">
-					<div class="alert alert-success" role="alert">
-						<c:out value="${requestScope.statusMsg}" />
-					</div>
-				</c:if>
-				<c:if test="${requestScope.status eq('erro')}">
-					<div class="alert alert-danger" role="alert">
-						<c:out value="${requestScope.statusMsg}" />
-					</div>
-				</c:if>
+					<c:if test="${requestScope.status eq('ok')}">
+						<div class="alert alert-success" role="alert">
+							<c:out value="${requestScope.statusMsg}" />
+						</div>
+					</c:if>
+					<c:if test="${requestScope.status eq('erro')}">
+						<div class="alert alert-danger" role="alert">
+							<c:out value="${requestScope.statusMsg}" />
+						</div>
+					</c:if>
 				</td>
-			</tr>
-		</c:if>
-	</table>
+			</tr>	
+		</table>
+	</c:if>
 	
 	<div class="list-group">
 		<a href="cliente?op=inserir" class="list-group-item list-group-item-action">Inserir um cliente</a>
 		<a href="cliente?op=listar" class="list-group-item list-group-item-action">Listar clientes</a>
 	</div>
+	
+	<script type="text/javascript" src="js/ajax.js"></script>
 </html>

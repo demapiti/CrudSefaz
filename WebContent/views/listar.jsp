@@ -12,7 +12,7 @@
 <link rel="stylesheet" type="text/css" href="css/bootstrap-grid.min.css">
 <link rel="stylesheet" type="text/css" href="css/bootstrap-reboot.css">
 <link rel="stylesheet" type="text/css" href="css/bootstrap-reboot.min.css">
-<title>Listar clientes</title>
+<title>Listar clientes - Sefaz</title>
 
 <c:if test="${empty sessionScope['cliente']}">
 	<c:set var="statusMsg"
@@ -43,10 +43,12 @@
 			<tr>
 				<th scope="col">Nome</th>
 				<th scope="col">E-mail</th>
+				<th scope="col">Saldo</th>
 				<th scope="col">DDD</th>
 				<th scope="col">Número</th>
 				<th scope="col">Tipo</th>
-				<th scope="col">Editar</th>
+				<th scope="col">Editar Cliente</th>
+				<th scope="col">Editar Saldo</th>
 				<c:if test="${!empty sessionScope['cliente']}">
 					<th scope="col">Remover</th>
 				</c:if>
@@ -54,16 +56,19 @@
 		</thead>
 		
 		<c:set var="telefone" value="${telefone}"></c:set>
+		<c:set var="saldo" value="${saldo}"></c:set>
 
 		<tbody>
 			<c:forEach var="cliente" items="${lista}" varStatus="loopCliente">
 				<tr>
 					<th scope="row"><c:out value="${cliente.nome}"></c:out></th>
 					<td><c:out value="${cliente.email}"></c:out></td>
+					<td><c:out value="R$ ${saldo[loopCliente.index].saldo}"></c:out></td>
 					<td><c:out value="${telefone[loopCliente.index].ddd}"></c:out></td>
 					<td><c:out value="${telefone[loopCliente.index].numero}"></c:out></td>
 					<td><c:out value="${telefone[loopCliente.index].tipo}"></c:out></td>
 					<td><a href="cliente?op=editar&id_cliente=<c:out value="${cliente.id_cliente}"></c:out>">Editar</a></td>
+					<td><a href="cliente?op=saldo&id_cliente=<c:out value="${cliente.id_cliente}"></c:out>">Adicionar</a></td>
 					<c:if test="${!empty sessionScope['cliente']}">
 						<td><a href="cliente?op=deletar&id_cliente=<c:out value="${cliente.id_cliente}"></c:out>">Deletar</a></td></c:if>
 				</tr>

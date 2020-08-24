@@ -12,7 +12,7 @@
 <link rel="stylesheet" type="text/css" href="css/bootstrap-grid.min.css">
 <link rel="stylesheet" type="text/css" href="css/bootstrap-reboot.css">
 <link rel="stylesheet" type="text/css" href="css/bootstrap-reboot.min.css">
-<title>Editar cliente</title>
+<title>Editar cliente - Sefaz</title>
 
 <c:if test="${empty sessionScope['cliente']}">
 	<c:set var="statusMsg"
@@ -103,7 +103,7 @@
 			</c:choose>
 			<div class="form-group col-md-2">
 				<label for="ddd">DDD</label>
-				<input type="text" class="form-control" id="ddd" name="ddd" value="${telefone.ddd}" maxlength="2" required>
+				<input type="text" class="form-control" id="ddd" name="ddd" value="${telefone.ddd}" maxlength="2" required onkeypress="return event.charCode >= 48 && event.charCode <= 57">
 			</div>
 			<div class="form-group col-md-6">
 				<label for="numero">Número</label>

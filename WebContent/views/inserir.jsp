@@ -71,7 +71,7 @@
 			</div>
 			<div class="form-group col-md-6">
 				<label for="numero">Número</label>
-				<input type="text" class="form-control" id="numero" name="numero" data-mask="00000-0000" data-mask-clearifnotmatch="true" maxlength="11" required onkeypress="return event.charCode >= 48 && event.charCode <= 57">
+				<input type="text" class="form-control" id="numero" name="numero" maxlength="11" required onkeypress="return event.charCode >= 48 && event.charCode <= 57 && ($(this).mask('00000-0000'))">
 			</div>
 		</div>
 		<button type="submit" class="btn btn-success">Cadastrar</button>
