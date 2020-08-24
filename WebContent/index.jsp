@@ -20,8 +20,8 @@
 
 	<h1>Autenticação de Cliente</h1>
 	
-	<table>
-		<c:if test="${sessionScope.status eq('erro')}">
+	<c:if test="${sessionScope.status eq('erro')}">
+		<table>
 			<tr>
 				<td class="center-align">
 					<div class="alert alert-danger" role="alert">
@@ -29,8 +29,27 @@
 					</div>
 				</td>
 			</tr>
-		</c:if>
-	</table>
+		</table>
+	</c:if>
+	
+	<c:if test="${!empty requestScope.status}">
+		<table>
+			<tr>
+				<td class="center-align">
+					<c:if test="${requestScope.status eq('ok')}">
+						<div class="alert alert-success" role="alert">
+							<c:out value="${requestScope.statusMsg}" />
+						</div>
+					</c:if>
+					<c:if test="${requestScope.status eq('erro')}">
+						<div class="alert alert-danger" role="alert">
+							<c:out value="${requestScope.statusMsg}" />
+						</div>
+					</c:if>
+				</td>
+			</tr>	
+		</table>
+	</c:if>
 	
 	<form action="entrar" method="post">
 		<input type="hidden" name="op" value="entrar">
