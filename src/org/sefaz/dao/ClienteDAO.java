@@ -14,46 +14,47 @@ import org.sefaz.model.Cliente;
 
 public class ClienteDAO {
 	private Connection connection;
-	private PreparedStatement statement;
-	private boolean retorno;
+	private boolean retorno = false;
 
 	private Connection fazerConn() throws SQLException {
 		return Conn.getConnection();
 	}
 	
-	public long inserir(Cliente cliente) throws SQLException {
-		String sql = null;
-		long fk_cliente = 0;
+	public long inserir(Cliente cliente) throws SQLException
+	{
 		connection = fazerConn();
 		connection.setAutoCommit(false);
+		
+		long fk_cliente = 0;
 		
 		if(!checkEmail(cliente.getEmail()))
 		{
 			try {
-				sql = "INSERT INTO clientes (id_cliente, nome, email, senha) VALUES (?,?,?,?)";
-				statement = connection.prepareStatement(sql, RETURN_GENERATED_KEYS);
-
-				statement.setString(1, null);
-				statement.setString(2, cliente.getNome());
-				statement.setString(3, cliente.getEmail());
-				statement.setString(4, cliente.getSenha());
+				PreparedStatement statement = connection.prepareStatement("INSERT INTO clientes (nome, email, senha) VALUES (?,?,?)", RETURN_GENERATED_KEYS);
+		
+				statement.setString(1, cliente.getNome());
+				statement.setString(2, cliente.getEmail());
+				statement.setString(3, cliente.getSenha());
 
 				retorno = statement.executeUpdate() > 0;
 				if (retorno == false) {
 					throw new SQLException("Ops, não foi possível criar um novo usuário.");
 				}
 			
-				try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
-					if (generatedKeys.next()) {
+				try (ResultSet generatedKeys = statement.getGeneratedKeys())
+				{
+					if (generatedKeys.next())
+					{
 						fk_cliente = generatedKeys.getLong(1);
 					}
-					else {
+					else
+					{
 						throw new SQLException("Não foi possível retornar um número de ID. Tente novamente.");
 					}
 				}
 				connection.commit();
 				statement.close();
-			} catch (SQLException e) {
+			} catch (SQLException e){
 				connection.rollback();
 				e.printStackTrace();
 			} finally {
@@ -64,14 +65,13 @@ public class ClienteDAO {
 		return fk_cliente;
 	}
 
-	public boolean editar(Cliente cliente) throws SQLException {
-		String sql = null;
-		retorno = false;
+	public boolean editar(Cliente cliente) throws SQLException
+	{
 		connection = fazerConn();
+		connection.setAutoCommit(false);
+		
 		try {
-			connection.setAutoCommit(false);
-			sql = "UPDATE clientes SET nome=?, email=?, senha=? WHERE id_cliente=?";
-			statement = connection.prepareStatement(sql);
+			PreparedStatement statement = connection.prepareStatement("UPDATE clientes SET nome=?, email=?, senha=? WHERE id_cliente=?");
 
 			statement.setString(1, cliente.getNome());
 			statement.setString(2, cliente.getEmail());
@@ -81,7 +81,6 @@ public class ClienteDAO {
 			retorno = statement.executeUpdate() > 0;
 			connection.commit();
 			statement.close();
-
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -91,21 +90,19 @@ public class ClienteDAO {
 		return retorno;
 	}
 
-	public boolean deletar(int idCliente) throws SQLException {
-		String sql = null;
-		retorno = false;
+	public boolean deletar(int idCliente) throws SQLException
+	{
 		connection = fazerConn();
+		connection.setAutoCommit(false);
+		
 		try {
-			connection.setAutoCommit(false);
-			sql = "DELETE FROM clientes WHERE id_cliente=?";
-			statement = connection.prepareStatement(sql);
-
+			
+			PreparedStatement statement = connection.prepareStatement("DELETE FROM clientes WHERE id_cliente=?");
 			statement.setInt(1, idCliente);
 
 			retorno = statement.executeUpdate() > 0;
 			connection.commit();
 			statement.close();
-
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -115,28 +112,26 @@ public class ClienteDAO {
 		return retorno;
 	}
 
-	public List<Cliente> listarClientes() throws SQLException {
-		ResultSet resultSet = null;
+	public List<Cliente> listarClientes() throws SQLException
+	{
+		connection = fazerConn();
+		
 		List<Cliente> listaClientes = new ArrayList<>();
 
-		String sql = null;
-		connection = fazerConn();
-
 		try {
-			sql = "SELECT * FROM clientes ORDER BY nome ASC";
-			statement = connection.prepareStatement(sql);
-			resultSet = statement.executeQuery();
-
-			while (resultSet.next()) {
-				Cliente c = new Cliente();
-				c.setId_cliente(resultSet.getInt(1));
-				c.setNome(resultSet.getString(2));
-				c.setEmail(resultSet.getString(3));
-				c.setSenha(resultSet.getString(4));
-				listaClientes.add(c);
+			PreparedStatement statement = connection.prepareStatement("SELECT * FROM clientes ORDER BY nome ASC");
+			
+			ResultSet rset = statement.executeQuery();
+			while (rset.next())
+			{
+				Cliente cliente = new Cliente();
+				cliente.setId_cliente(rset.getInt(1));
+				cliente.setNome(rset.getString(2));
+				cliente.setEmail(rset.getString(3));
+				cliente.setSenha(rset.getString(4));
+				listaClientes.add(cliente);
 			}
 			statement.close();
-
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -146,57 +141,56 @@ public class ClienteDAO {
 		return listaClientes;
 	}
 
-	public Cliente listarCliente(int id_cliente) throws SQLException {
-		ResultSet resultSet = null;
-		Cliente c = new Cliente();
-
-		String sql = null;
+	public Cliente listarCliente(int id_cliente) throws SQLException
+	{
 		connection = fazerConn();
+		
+		Cliente cliente = new Cliente();
 
 		try {
-			sql = "SELECT * FROM clientes WHERE id_cliente=?";
-			statement = connection.prepareStatement(sql);
+			PreparedStatement statement = connection.prepareStatement("SELECT * FROM clientes WHERE id_cliente=?");
 			statement.setInt(1, id_cliente);
-			resultSet = statement.executeQuery();
-
-			if (resultSet.next()) {
-				c.setId_cliente(resultSet.getInt(1));
-				c.setNome(resultSet.getString(2));
-				c.setEmail(resultSet.getString(3));
-				c.setSenha(resultSet.getString(4));
+			
+			ResultSet rset = statement.executeQuery();
+			if (rset.next())
+			{
+				cliente.setId_cliente(rset.getInt(1));
+				cliente.setNome(rset.getString(2));
+				cliente.setEmail(rset.getString(3));
+				cliente.setSenha(rset.getString(4));
 			}
 			statement.close();
-			resultSet.close();
+			rset.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			System.out.println("Fechando conexão...");
 			connection.close();
 		}
-		return c;
+		return cliente;
 	}
 	
-	public Cliente clienteEntrar(Cliente c) throws SQLException {
-		ResultSet resultSet = null;
+	public Cliente clienteEntrar(Cliente c) throws SQLException
+	{
+		connection = fazerConn();
+		
 		Cliente cliente = new Cliente();
 		
-		String sql = null;
-		connection = fazerConn();
-			
 		try {
-			sql = "SELECT * FROM clientes WHERE email=? AND senha=?";
-			statement = connection.prepareStatement(sql);
+			PreparedStatement statement = connection.prepareStatement("SELECT * FROM clientes WHERE email=? AND senha=?");
 			statement.setString(1, c.getEmail());
 			statement.setString(2, c.getSenha());
-			resultSet = statement.executeQuery();
-				if (resultSet.next()) {
-				cliente.setId_cliente(resultSet.getInt(1));
-				cliente.setNome(resultSet.getString(2));
-				cliente.setEmail(resultSet.getString(3));
-				cliente.setSenha(resultSet.getString(4));
+			
+			ResultSet rset = statement.executeQuery();
+			if (rset.next())
+			{
+				cliente.setId_cliente(rset.getInt(1));
+				cliente.setNome(rset.getString(2));
+				cliente.setEmail(rset.getString(3));
+				cliente.setSenha(rset.getString(4));
 			}
 			statement.close();
-			resultSet.close();
+			rset.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -208,20 +202,24 @@ public class ClienteDAO {
 	
 	public boolean checkEmail(String email) throws SQLException
 	{
-		retorno = false;
-		
 		connection = fazerConn();
 		connection.setAutoCommit(false);
 		
-		PreparedStatement st = connection.prepareStatement("SELECT email FROM clientes WHERE email=?");
-		st.setString(1, email);
-		final ResultSet rset = st.executeQuery();
-		if (rset.next())
-		{
-			retorno = true;
+		try {
+			PreparedStatement statement = connection.prepareStatement("SELECT email FROM clientes WHERE email=?");
+			statement.setString(1, email);
+		
+			ResultSet rset = statement.executeQuery();
+			if (rset.next())
+			{
+				retorno = true;
+			}
+			statement.execute();
+			statement.close();
+			rset.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
-		st.execute();
-		st.close();
 		return retorno;
 	}
 }

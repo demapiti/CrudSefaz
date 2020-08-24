@@ -6,8 +6,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.sefaz.dao.ClienteDAO;
+import org.sefaz.dao.SaldoDAO;
 import org.sefaz.dao.TelefoneDAO;
 import org.sefaz.model.Cliente;
+import org.sefaz.model.Saldo;
 import org.sefaz.model.Telefone;
 
 import javax.servlet.ServletException;
@@ -51,15 +53,19 @@ public class ClienteController extends HttpServlet {
 			List<Cliente> lista = new ArrayList<>();
 			TelefoneDAO telefoneDAO = new TelefoneDAO();
 			List<Telefone> telefone = new ArrayList<>();
+			SaldoDAO saldoDAO = new SaldoDAO();
+			List<Saldo> saldo = new ArrayList<>();
 
 			try {
 				lista = clienteDAO.listarClientes();
 				for (Cliente cliente : lista) {
 					telefone.add(telefoneDAO.listarTelefone(cliente.getId_cliente()));
+					saldo.add(saldoDAO.listarSaldo(cliente.getId_cliente()));
 				}
 
 				request.setAttribute("lista", lista);
 				request.setAttribute("telefone", telefone);
+				request.setAttribute("saldo", saldo);
 				request.getRequestDispatcher("views/listar.jsp").include(request, response);
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -80,6 +86,24 @@ public class ClienteController extends HttpServlet {
 				request.setAttribute("cliente", c);
 				request.setAttribute("telefone", telefone);
 				request.getRequestDispatcher("views/editar.jsp").include(request, response);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		} else if (op.contentEquals("saldo")) {
+			int id_cliente = Integer.parseInt(request.getParameter("id_cliente"));
+			System.out.println("Adicionar saldo ao id: " + id_cliente);
+
+			ClienteDAO clienteDAO = new ClienteDAO();
+			Cliente c = new Cliente();
+			SaldoDAO saldoDAO = new SaldoDAO();
+			Saldo saldo = new Saldo();
+
+			try {
+				c = clienteDAO.listarCliente(id_cliente);
+				saldo = saldoDAO.listarSaldo(c.getId_cliente());
+				request.setAttribute("cliente", c);
+				request.setAttribute("saldo", saldo);
+				request.getRequestDispatcher("views/saldo.jsp").include(request, response);
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -134,7 +158,16 @@ public class ClienteController extends HttpServlet {
 
 					request.setAttribute("status", "ok");
 					request.setAttribute("statusMsg", "Cliente inserido com sucesso!");
-					request.getRequestDispatcher("views/menu.jsp").include(request, response);
+					
+					HttpSession session = request.getSession(false);
+					if (session.getAttribute("cliente") == null)
+					{
+						request.getRequestDispatcher("index.jsp").include(request, response);
+					}
+					else
+					{
+						request.getRequestDispatcher("views/menu.jsp").include(request, response);
+					}
 				}
 				else
 				{
@@ -167,6 +200,22 @@ public class ClienteController extends HttpServlet {
 				telefoneDAO.editarTelefone(telefone);
 				request.setAttribute("status", "ok");
 				request.setAttribute("statusMsg", "Cliente editado com sucesso!");
+				request.getRequestDispatcher("views/menu.jsp").include(request, response);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		} else if (op.contentEquals("saldo")) {
+			SaldoDAO saldoDAO = new SaldoDAO();
+
+			Saldo saldo = new Saldo();
+			saldo.setSaldo(Float.parseFloat(request.getParameter("saldo")));
+			saldo.setFk_id_cliente(Integer.parseInt(request.getParameter("id_cliente")));
+
+			try {
+				saldoDAO.adicionarSaldo(saldo);
+				request.setAttribute("status", "ok");
+				request.setAttribute("statusMsg", "Saldo adicionado com sucesso!");
 				request.getRequestDispatcher("views/menu.jsp").include(request, response);
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block

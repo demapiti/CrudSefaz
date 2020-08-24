@@ -10,23 +10,19 @@ import org.sefaz.model.Telefone;
 
 public class TelefoneDAO {
 	private Connection connection;
-	private PreparedStatement statement;
-	private boolean retorno;
+	private boolean retorno = false;
 
 	private Connection fazerConn() throws SQLException {
 		return Conn.getConnection();
 	}
 
-	public boolean inserirTelefone(Telefone telefone) throws SQLException {
-		String sql = null;
-		retorno = false;
+	public boolean inserirTelefone(Telefone telefone) throws SQLException
+	{
 		connection = fazerConn();
+		connection.setAutoCommit(false);
 
 		try {
-			connection.setAutoCommit(false);
-			sql = "INSERT INTO telefone (id_telefone, ddd, numero, tipo, fk_id_cliente) VALUES (?,?,?,?,?)";
-
-			statement = connection.prepareStatement(sql);
+			PreparedStatement statement = connection.prepareStatement("INSERT INTO telefone (id_telefone, ddd, numero, tipo, fk_id_cliente) VALUES (?,?,?,?,?)");
 
 			statement.setString(1, null);
 			statement.setInt(2, telefone.getDdd());
@@ -48,15 +44,14 @@ public class TelefoneDAO {
 		return retorno;
 	}
 
-	public boolean editarTelefone(Telefone telefone) throws SQLException {
-		String sql = null;
-		retorno = false;
+	public boolean editarTelefone(Telefone telefone) throws SQLException
+	{
 		connection = fazerConn();
+		connection.setAutoCommit(false);
+		
 		try {
-			connection.setAutoCommit(false);
-			sql = "UPDATE telefone SET ddd=?, numero=?, tipo=? WHERE fk_id_cliente=?";
-			statement = connection.prepareStatement(sql);
-
+			PreparedStatement statement = connection.prepareStatement("UPDATE telefone SET ddd=?, numero=?, tipo=? WHERE fk_id_cliente=?");
+			
 			statement.setInt(1, telefone.getDdd());
 			statement.setString(2, telefone.getNumero());
 			statement.setString(3, telefone.getTipo());
@@ -75,30 +70,26 @@ public class TelefoneDAO {
 		return retorno;
 	}
 
-	public Telefone listarTelefone(int id_cliente) throws SQLException {
-		ResultSet resultSet = null;
-		Telefone telefone = new Telefone();
-
-		String sql = null;
+	public Telefone listarTelefone(int id_cliente) throws SQLException
+	{
 		connection = fazerConn();
-
-		sql = "SELECT * FROM telefone WHERE fk_id_cliente=?";
-
-		statement = connection.prepareStatement(sql);
+		Telefone telefone = new Telefone();
+		
+		PreparedStatement statement = connection.prepareStatement("SELECT * FROM telefone WHERE fk_id_cliente=?");
 		statement.setInt(1, id_cliente);
 
-		resultSet = statement.executeQuery();
+		ResultSet rset = statement.executeQuery();
 		try {
-			if (resultSet.next()) {
-				telefone.setId_telefone(resultSet.getInt(1));
-				telefone.setDdd(resultSet.getInt(2));
-				telefone.setNumero(resultSet.getString(3));
-				telefone.setTipo(resultSet.getString(4));
-				telefone.setFk_id_cliente(resultSet.getInt(5));
+			if (rset.next()) {
+				telefone.setId_telefone(rset.getInt(1));
+				telefone.setDdd(rset.getInt(2));
+				telefone.setNumero(rset.getString(3));
+				telefone.setTipo(rset.getString(4));
+				telefone.setFk_id_cliente(rset.getInt(5));
 			}
 
 			statement.close();
-			resultSet.close();
+			rset.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {

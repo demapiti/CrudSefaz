@@ -12,7 +12,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.sefaz.dao.ClienteDAO;
+import org.sefaz.dao.SaldoDAO;
 import org.sefaz.model.Cliente;
+import org.sefaz.model.Saldo;
 
 /**
  * Servlet implementation class EntrarController
@@ -66,7 +68,18 @@ public class EntrarController extends HttpServlet {
           
     		if(cliente.getId_cliente() != 0)
     		{
+    			SaldoDAO saldoDAO = new SaldoDAO();
+    			Saldo saldo = new Saldo();
+    			
+    			try {
+					saldo = saldoDAO.listarSaldo(cliente.getId_cliente());
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+    			
     			session.setAttribute("cliente", cliente);
+    			session.setAttribute("saldo", saldo);
     			session.setAttribute("status", "ok");
     			request.getRequestDispatcher("views/menu.jsp").include(request, response);
     		}  
