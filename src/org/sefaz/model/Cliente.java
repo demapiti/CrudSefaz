@@ -1,13 +1,10 @@
 package org.sefaz.model;
 
-import java.util.ArrayList;
-
 public class Cliente {
 	private int id_cliente;
 	private String nome;
 	private String email;
 	private String senha;
-	private ArrayList<Telefone> telefone;
 	
 	public Cliente(int id_cliente, String nome, String email, String senha) {
 		super();
@@ -52,21 +49,6 @@ public class Cliente {
 	public void setSenha(String senha) {
 		this.senha = senha;
 	}
-	
-	 public String getTelefone()
-	 {
-		 String s = "";
-		 for(Telefone t: telefone)
-		 {
-			s = t.toString() + "\n";
-		 }
-		 return s;
-	 }
-	 
-	public void setTelefone(Telefone tf)
-    {  
-		telefone.add(tf);
-    }
 
 	@Override
 	public String toString() {

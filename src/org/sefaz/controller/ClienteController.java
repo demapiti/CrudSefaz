@@ -112,9 +112,13 @@ public class ClienteController extends HttpServlet {
 			int id_cliente = Integer.parseInt(request.getParameter("id_cliente"));
 			try {
 				HttpSession session = request.getSession(false);
-				if (session.getAttribute("cliente") == null) {
+				
+				if (session.getAttribute("cliente") == null)
+				{
 					request.getRequestDispatcher("index.jsp").include(request, response);
-				} else {
+				}
+				else
+				{
 					clienteDAO.deletar(id_cliente);
 					System.out.println("Cliente deletado com sucesso!");
 					request.getRequestDispatcher("cliente?op=listar").include(request, response);
