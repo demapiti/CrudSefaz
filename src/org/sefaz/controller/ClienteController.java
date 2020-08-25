@@ -218,6 +218,15 @@ public class ClienteController extends HttpServlet {
 
 			try {
 				saldoDAO.adicionarSaldo(saldo);
+				
+				try {
+					Saldo saldoAtt = new Saldo();
+					saldoAtt = saldoDAO.listarSaldo(Integer.parseInt(request.getParameter("id_cliente")));
+					
+					HttpSession session = request.getSession(false);
+					session.setAttribute("saldo", saldoAtt);
+				} catch (Exception e) {}
+				
 				request.setAttribute("status", "ok");
 				request.setAttribute("statusMsg", "Saldo adicionado com sucesso!");
 				request.getRequestDispatcher("views/menu.jsp").include(request, response);

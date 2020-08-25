@@ -33,6 +33,7 @@ public class SairController extends HttpServlet {
 		
 		HttpSession session = request.getSession();
 		session.removeAttribute("cliente");
+		session.removeAttribute("saldo");
 		session.setAttribute("status", "erro");
 		session.setAttribute("statusMsg", "Sessão Inválida.");
 		session.invalidate();
