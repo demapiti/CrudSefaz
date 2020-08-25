@@ -22,13 +22,13 @@ public class ClienteDAO {
 	
 	public long inserir(Cliente cliente) throws SQLException
 	{
-		connection = fazerConn();
-		connection.setAutoCommit(false);
-		
 		long fk_cliente = 0;
 		
 		if(!checkEmail(cliente.getEmail()))
 		{
+			connection = fazerConn();
+			connection.setAutoCommit(false);
+			
 			try {
 				PreparedStatement statement = connection.prepareStatement("INSERT INTO clientes (nome, email, senha) VALUES (?,?,?)", RETURN_GENERATED_KEYS);
 		
@@ -219,6 +219,9 @@ public class ClienteDAO {
 			rset.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			System.out.println("Fechando conexão...");
+			connection.close();
 		}
 		return retorno;
 	}
