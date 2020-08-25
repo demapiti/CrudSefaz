@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 25-Ago-2020 às 00:41
+-- Generation Time: 26-Ago-2020 às 01:46
 -- Versão do servidor: 5.5.21
 -- versão do PHP: 7.3.2
 
@@ -40,7 +40,8 @@ CREATE TABLE `clientes` (
 --
 
 INSERT INTO `clientes` (`id_cliente`, `nome`, `email`, `senha`) VALUES
-(1, 'admin', 'admin', 'admin'),
+(1, 'admin', 'admin@sefaz.org', 'admin'),
+(44, 'teste', 'teste@teste.com', 'teste');
 
 -- --------------------------------------------------------
 
@@ -59,7 +60,8 @@ CREATE TABLE `clientes_saldo` (
 --
 
 INSERT INTO `clientes_saldo` (`id_saldo`, `saldo`, `fk_id_cliente`) VALUES
-(1, 100, 1),
+(3, 650, 1);
+
 -- --------------------------------------------------------
 
 --
@@ -79,7 +81,7 @@ CREATE TABLE `telefone` (
 --
 
 INSERT INTO `telefone` (`id_telefone`, `ddd`, `numero`, `tipo`, `fk_id_cliente`) VALUES
-(1, 99, '97777-7777', 'Celular', 1);
+(29, 21, '32132-1321', 'Residencial', 44);
 
 --
 -- Indexes for dumped tables
@@ -113,19 +115,19 @@ ALTER TABLE `telefone`
 -- AUTO_INCREMENT for table `clientes`
 --
 ALTER TABLE `clientes`
-  MODIFY `id_cliente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
+  MODIFY `id_cliente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
 
 --
 -- AUTO_INCREMENT for table `clientes_saldo`
 --
 ALTER TABLE `clientes_saldo`
-  MODIFY `id_saldo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_saldo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `telefone`
 --
 ALTER TABLE `telefone`
-  MODIFY `id_telefone` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `id_telefone` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- Constraints for dumped tables
@@ -135,7 +137,7 @@ ALTER TABLE `telefone`
 -- Limitadores para a tabela `clientes_saldo`
 --
 ALTER TABLE `clientes_saldo`
-  ADD CONSTRAINT `fk_id_cliente` FOREIGN KEY (`fk_id_cliente`) REFERENCES `clientes` (`id_cliente`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `cliente_saldo` FOREIGN KEY (`fk_id_cliente`) REFERENCES `clientes` (`id_cliente`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Limitadores para a tabela `telefone`
