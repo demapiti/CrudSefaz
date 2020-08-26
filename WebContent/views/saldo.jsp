@@ -41,7 +41,7 @@
 	<br>
 	<table>
 		<tr>
-			<td><a href="cliente?op=listar"><button class="btn btn-outline-info">Voltar</button></a></td>
+			<td><a href="cliente?op=listar"><button class="btn btn-outline-secondary">Voltar</button></a></td>
 		</tr>
 	</table>
 	<br>

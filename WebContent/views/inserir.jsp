@@ -43,14 +43,14 @@
 	<c:if test="${!empty sessionScope.cliente}">
 		<table>
 			<tr>
-				<td><a href="cliente?op=menu"><button class="btn btn-outline-info">Voltar</button></a></td>
+				<td><a href="cliente?op=menu"><button class="btn btn-outline-secondary">Voltar</button></a></td>
 			</tr>
 		</table>
 	</c:if>
 	<c:if test="${empty sessionScope.cliente}">
 		<table>
 			<tr>
-				<td><a href="cliente?op=index"><button class="btn btn-outline-info">Voltar</button></a></td>
+				<td><a href="cliente?op=index"><button class="btn btn-outline-secondary">Voltar</button></a></td>
 			</tr>
 		</table>
 	</c:if>
