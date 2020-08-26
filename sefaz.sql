@@ -40,8 +40,7 @@ CREATE TABLE `clientes` (
 --
 
 INSERT INTO `clientes` (`id_cliente`, `nome`, `email`, `senha`) VALUES
-(1, 'admin', 'admin@sefaz.org', 'admin'),
-(44, 'teste', 'teste@teste.com', 'teste');
+(1, 'admin', 'admin@sefaz.org', 'admin');
 
 -- --------------------------------------------------------
 
@@ -60,7 +59,7 @@ CREATE TABLE `clientes_saldo` (
 --
 
 INSERT INTO `clientes_saldo` (`id_saldo`, `saldo`, `fk_id_cliente`) VALUES
-(3, 650, 1);
+(1, 650, 1);
 
 -- --------------------------------------------------------
 
@@ -81,7 +80,7 @@ CREATE TABLE `telefone` (
 --
 
 INSERT INTO `telefone` (`id_telefone`, `ddd`, `numero`, `tipo`, `fk_id_cliente`) VALUES
-(29, 21, '32132-1321', 'Residencial', 44);
+(1, 99, '97777-7777', 'Celular', 1);
 
 --
 -- Indexes for dumped tables
