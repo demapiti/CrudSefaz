@@ -60,21 +60,21 @@
 		<input type="hidden" name="op" value="inserir">
 		<div class="form-row">
 			<div class="form-group col-md-6">
-				<label for="nome">Nome</label>
+				<label for="nome">Nome *</label>
 				<input type="text" class="form-control" id="nome" name="nome" required>
 			</div>
 			<div class="form-group col-md-6">
-				<label for="password">Senha</label>
+				<label for="password">Senha *</label>
 				<input type="password" class="form-control" id="senha" name="senha" required>
 			</div>
 		</div>
 		<div class="form-group">
-			<label for="email">E-mail</label>
+			<label for="email">E-mail *</label>
 			<input type="email" class="form-control" id="email" name="email" placeholder="email@gmail.com" required>
 		</div>
 		<div class="form-row">
 			<div class="form-group col-md-4">
-				<label for="tipo">Tipo</label>
+				<label for="tipo">Tipo *</label>
 				<select id="tipo" name="tipo" class="form-control">
 					<option selected>Selecione...</option>
 					<option>Residencial</option>
@@ -83,11 +83,11 @@
 				</select>
 			</div>
 			<div class="form-group col-md-2">
-				<label for="ddd">DDD</label>
+				<label for="ddd">DDD *</label>
 				<input type="text" class="form-control" id="ddd" name="ddd" maxlength="2" required onkeypress="return event.charCode >= 48 && event.charCode <= 57">
 			</div>
 			<div class="form-group col-md-6">
-				<label for="numero">Número</label>
+				<label for="numero">Número *</label>
 				<input type="text" class="form-control" id="numero" name="numero" maxlength="11" required onkeypress="return event.charCode >= 48 && event.charCode <= 57 && ($(this).mask('00000-0000'))">
 			</div>
 		</div>
