@@ -48,6 +48,10 @@ public class ClienteController extends HttpServlet {
 		if (op.contentEquals("inserir")) {
 			System.out.println("Inserir cliente.");
 			request.getRequestDispatcher("views/inserir.jsp").include(request, response);
+		} else if (op.contentEquals("menu")) {
+			request.getRequestDispatcher("views/menu.jsp").include(request, response);
+		} else if (op.contentEquals("index")) {
+			request.getRequestDispatcher("index.jsp").include(request, response);
 		} else if (op.contentEquals("listar")) {
 			ClienteDAO clienteDAO = new ClienteDAO();
 			List<Cliente> lista = new ArrayList<>();

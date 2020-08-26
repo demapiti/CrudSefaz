@@ -39,6 +39,23 @@
 		</c:if>
 	</table>
 	
+	<br>
+	<c:if test="${!empty sessionScope.cliente}">
+		<table>
+			<tr>
+				<td><a href="cliente?op=menu"><button class="btn btn-outline-info">Voltar</button></a></td>
+			</tr>
+		</table>
+	</c:if>
+	<c:if test="${empty sessionScope.cliente}">
+		<table>
+			<tr>
+				<td><a href="cliente?op=index"><button class="btn btn-outline-info">Voltar</button></a></td>
+			</tr>
+		</table>
+	</c:if>
+	<br>
+	
 	<form action="cliente" method="post">
 		<input type="hidden" name="op" value="inserir">
 		<div class="form-row">

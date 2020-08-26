@@ -37,6 +37,14 @@
 	<br><img src="img/logo.png" class=center><br>
 	
 	<h1>Listar clientes</h1>
+	
+	<br>
+	<table>
+		<tr>
+			<td><a href="cliente?op=menu"><button class="btn btn-outline-info">Voltar</button></a></td>
+		</tr>
+	</table>
+	<br>
 
 	<table class="table table-bordered">
 		<thead>

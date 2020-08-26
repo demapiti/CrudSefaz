@@ -38,6 +38,14 @@
 	
 	<h1>Editar cliente</h1>
 	
+	<br>
+	<table>
+		<tr>
+			<td><a href="cliente?op=listar"><button class="btn btn-outline-info">Voltar</button></a></td>
+		</tr>
+	</table>
+	<br>
+	
 	<form action="cliente" method="post">
 		<c:set var="cliente" value="${cliente}"></c:set>
 		<c:set var="telefone" value="${telefone}"></c:set>

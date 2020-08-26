@@ -18,7 +18,14 @@
 <tr>
 	<td>
 		<div class="alert alert-secondary" role="alert">
-			Bem-vindo <c:out value="${sessionScope.cliente.nome}" />. O seu saldo é: R$ <c:out value="${sessionScope.saldo.saldo}" />. <a href="sair">Sair</a>
+			Bem-vindo <c:out value="${sessionScope.cliente.nome}" />. <a href="sair">Sair</a>
+		</div>
+	</td>
+</tr>
+<tr>
+	<td>
+		<div class="alert alert-secondary" role="alert">
+			O seu saldo é: R$ <c:out value="${sessionScope.saldo.saldo}" />.
 		</div>
 	</td>
 </tr>
