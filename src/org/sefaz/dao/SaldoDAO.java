@@ -58,11 +58,10 @@ public class SaldoDAO {
 			}
 			else
 			{
-				PreparedStatement statement = connection.prepareStatement("INSERT INTO clientes_saldo (id_saldo, saldo, fk_id_cliente) VALUES (?,?,?)");
+				PreparedStatement statement = connection.prepareStatement("INSERT INTO clientes_saldo (saldo, fk_id_cliente) VALUES (?,?)");
 
-				statement.setString(1, null);
-				statement.setFloat(2, saldo.getSaldo());
-				statement.setInt(3, saldo.getFk_id_cliente());
+				statement.setFloat(1, saldo.getSaldo());
+				statement.setInt(2, saldo.getFk_id_cliente());
 
 				if (statement.executeUpdate() > 0)
 				{
