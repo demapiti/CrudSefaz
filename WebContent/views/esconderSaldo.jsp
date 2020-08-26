@@ -15,19 +15,21 @@
 </c:if>
 </head>
 <body>
-<tr>
-	<td>
-		<div class="alert alert-secondary" role="alert">
-			Bem-vindo <c:out value="${sessionScope.cliente.nome}" />. <a href="sair">Sair</a>
-		</div>
-	</td>
-</tr>
-<tr>
-	<td>
-		<div>
-			<input type="button" value="Mostrar Saldo" class="btn btn-outline-info" onclick="mostrarSaldo()">
-		</div>
-	</td>
-</tr>
+<table>
+	<tr>
+		<td>
+			<div class="alert alert-secondary" role="alert">
+				Bem-vindo <c:out value="${sessionScope.cliente.nome}" />. <a href="sair">Sair</a>
+			</div>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<div>
+				<input type="button" value="Mostrar Saldo" class="btn btn-outline-info" onclick="mostrarSaldo()">
+			</div>
+		</td>
+	</tr>
+</table>
 </body>
 </html>

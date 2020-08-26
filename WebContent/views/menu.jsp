@@ -24,22 +24,24 @@
 
 <body class=container>
 	<c:if test="${!empty sessionScope['cliente']}">
-		<table id="menu">
-			<tr>
-				<td>
-					<div class="alert alert-secondary" role="alert">
-						Bem-vindo <c:out value="${sessionScope.cliente.nome}" />. <a href="sair">Sair</a>
-					</div>
-				</td>
-			</tr>
-			<tr>
-				<td>
-					<div>
-						<input type="button" value="Mostrar Saldo" class="btn btn-outline-info" onclick="mostrarSaldo()">
-					</div>
-				</td>
-			</tr>
-		</table>
+		<div id="menu">
+			<table>
+				<tr>
+					<td>
+						<div class="alert alert-secondary" role="alert">
+							Bem-vindo <c:out value="${sessionScope.cliente.nome}" />. <a href="sair">Sair</a>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<div>
+							<input type="button" value="Mostrar Saldo" class="btn btn-outline-info" onclick="mostrarSaldo()">
+						</div>
+					</td>
+				</tr>
+			</table>
+		</div>
 	</c:if>
 	
 	<br><img src="img/logo.png" class=center><br>

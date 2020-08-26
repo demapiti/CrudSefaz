@@ -15,26 +15,28 @@
 </c:if>
 </head>
 <body>
-<tr>
-	<td>
+<table>
+	<tr>
+		<td>
+			<div class="alert alert-secondary" role="alert">
+				Bem-vindo <c:out value="${sessionScope.cliente.nome}" />. <a href="sair">Sair</a>
+			</div>
+		</td>
+	</tr>
+	<tr>
+		<td>
 		<div class="alert alert-secondary" role="alert">
-			Bem-vindo <c:out value="${sessionScope.cliente.nome}" />. <a href="sair">Sair</a>
-		</div>
-	</td>
-</tr>
-<tr>
-	<td>
-	<div class="alert alert-secondary" role="alert">
-			O seu saldo é: R$ <c:out value="${sessionScope.saldo.saldo}" />.
-		</div>
-	</td>
-</tr>
-<tr>
-	<td>
-		<div>
-			<input type="button" value="Esconder Saldo" class="btn btn-outline-info" onclick="esconderSaldo()">
-		</div>
-	</td>
-</tr>
+				O seu saldo é: R$ <c:out value="${sessionScope.saldo.saldo}" />.
+			</div>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<div>
+				<input type="button" value="Esconder Saldo" class="btn btn-outline-info" onclick="esconderSaldo()">
+			</div>
+		</td>
+	</tr>
+</table>
 </body>
 </html>
