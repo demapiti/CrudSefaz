@@ -186,6 +186,26 @@ public class ClienteController extends HttpServlet {
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
+		} else if (op.contentEquals("deletarTelefone")) {
+			TelefoneDAO telefoneDAO = new TelefoneDAO();
+			int id_telefone = Integer.parseInt(request.getParameter("id_telefone"));
+			int id_cliente = Integer.parseInt(request.getParameter("id_cliente"));
+			try {
+				HttpSession session = request.getSession(false);
+				
+				if (session.getAttribute("cliente") == null)
+				{
+					request.getRequestDispatcher("index.jsp").include(request, response);
+				}
+				else
+				{
+					telefoneDAO.deletarTelefone(id_telefone);
+					System.out.println("Telefone deletado com sucesso!");
+					request.getRequestDispatcher("cliente?op=editar&id_cliente=" + id_cliente).include(request, response);
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 

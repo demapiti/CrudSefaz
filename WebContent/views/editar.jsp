@@ -184,15 +184,20 @@
 					</div>
 				</c:forEach>
 				<c:forEach var="telefone" begin="1" end="1" items="${telefone}">
-					<div class="form-group col-md-6">
+					<div class="form-group col-md-5">
 						<label for="numero2">Número</label>
 						<input type="text" class="form-control" id="numero2" name="numero2" data-mask="00000-0000" data-mask-clearifnotmatch="true" maxlength="11" required onkeypress="return event.charCode >= 48 && event.charCode <= 57" value=
 							<c:out value="${telefone.numero}"></c:out>>
 					</div>
 				</c:forEach>
+				<c:forEach var="telefone" begin="1" end="1" items="${telefone}">
+					<div class="form-group col-md-1">
+						<a href="cliente?op=deletarTelefone&id_telefone=<c:out value="${telefone.id_telefone}"></c:out>&id_cliente=<c:out value="${cliente.id_cliente}"></c:out>"><input type="button" value="Deletar" class="btn btn-outline-danger"></a>
+					</div>
+				</c:forEach>
 			</div>
 		</c:if>
-		
+		<br>
 		<c:if test="${requestScope.existeTelefone eq('erro')}">
 			<input type="hidden" name="tel" value="inserir">
 			<div id="telefone2"><input type="button" value="Inserir outro telefone" class="btn btn-outline-info" onclick="inserirTelefone2()"></div>

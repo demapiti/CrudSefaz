@@ -72,6 +72,27 @@ public class TelefoneDAO {
 		return retorno;
 	}
 	
+	public boolean deletarTelefone(int id_telefone) throws SQLException
+	{
+		connection = fazerConn();
+		connection.setAutoCommit(false);
+		
+		try {
+			PreparedStatement statement = connection.prepareStatement("DELETE FROM telefone WHERE id_telefone=?");
+			statement.setInt(1, id_telefone);
+			
+			retorno = statement.executeUpdate() > 0;
+			connection.commit();
+			statement.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			System.out.println("Fechando conexão...");
+			connection.close();
+		}
+		return retorno;
+	}
+	
 	public List<Telefone> listarTelefone(int id_cliente) throws SQLException
 	{
 		connection = fazerConn();

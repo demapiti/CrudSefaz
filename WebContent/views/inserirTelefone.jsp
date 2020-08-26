@@ -22,9 +22,12 @@
 		<label for="ddd2">DDD *</label>
 		<input type="text" class="form-control" id="ddd2" name="ddd2" maxlength="2" required onkeypress="return event.charCode >= 48 && event.charCode <= 57">
 	</div>
-	<div class="form-group col-md-6">
+	<div class="form-group col-md-5">
 		<label for="numero2">Número *</label>
 		<input type="text" class="form-control" id="numero2" name="numero2" maxlength="11" required onkeypress="return event.charCode >= 48 && event.charCode <= 57 && ($(this).mask('00000-0000'))">
+	</div>
+	<div class="form-group col-md-1">
+		<input type="button" value="Cancelar" class="btn btn-outline-info" onclick="cancelarTelefone2()">
 	</div>
 </div>
 </body>
