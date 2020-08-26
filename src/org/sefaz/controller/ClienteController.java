@@ -79,7 +79,17 @@ public class ClienteController extends HttpServlet {
 				request.setAttribute("lista", lista);
 				request.setAttribute("telefone", telefone);
 				request.setAttribute("saldo", saldo);
-				request.getRequestDispatcher("views/listar.jsp").include(request, response);
+				
+				HttpSession session = request.getSession(false);
+				
+				if (session.getAttribute("cliente") == null)
+				{
+					request.getRequestDispatcher("index.jsp").include(request, response);
+				}
+				else
+				{
+					request.getRequestDispatcher("views/listar.jsp").include(request, response);
+				}
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -98,7 +108,17 @@ public class ClienteController extends HttpServlet {
 				telefone = telefoneDAO.listarTelefone(c.getId_cliente());
 				request.setAttribute("cliente", c);
 				request.setAttribute("telefone", telefone);
-				request.getRequestDispatcher("views/editar.jsp").include(request, response);
+				
+				HttpSession session = request.getSession(false);
+				
+				if (session.getAttribute("cliente") == null)
+				{
+					request.getRequestDispatcher("index.jsp").include(request, response);
+				}
+				else
+				{
+					request.getRequestDispatcher("views/editar.jsp").include(request, response);
+				}
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -116,7 +136,16 @@ public class ClienteController extends HttpServlet {
 				saldo = saldoDAO.listarSaldo(c.getId_cliente());
 				request.setAttribute("cliente", c);
 				request.setAttribute("saldo", saldo);
-				request.getRequestDispatcher("views/saldo.jsp").include(request, response);
+				HttpSession session = request.getSession(false);
+				
+				if (session.getAttribute("cliente") == null)
+				{
+					request.getRequestDispatcher("index.jsp").include(request, response);
+				}
+				else
+				{
+					request.getRequestDispatcher("views/saldo.jsp").include(request, response);
+				}
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
