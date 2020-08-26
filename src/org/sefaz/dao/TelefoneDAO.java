@@ -24,13 +24,12 @@ public class TelefoneDAO {
 		connection.setAutoCommit(false);
 
 		try {
-			PreparedStatement statement = connection.prepareStatement("INSERT INTO telefone (id_telefone, ddd, numero, tipo, fk_id_cliente) VALUES (?,?,?,?,?)");
+			PreparedStatement statement = connection.prepareStatement("INSERT INTO telefone (ddd, numero, tipo, fk_id_cliente) VALUES (?,?,?,?)");
 
-			statement.setString(1, null);
-			statement.setInt(2, telefone.getDdd());
-			statement.setString(3, telefone.getNumero());
-			statement.setString(4, telefone.getTipo());
-			statement.setInt(5, telefone.getFk_id_cliente());
+			statement.setInt(1, telefone.getDdd());
+			statement.setString(2, telefone.getNumero());
+			statement.setString(3, telefone.getTipo());
+			statement.setInt(4, telefone.getFk_id_cliente());
 
 			retorno = statement.executeUpdate() > 0;
 

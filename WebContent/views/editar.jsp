@@ -127,73 +127,83 @@
 			</div>
 		</div>
 		
-		<div class="form-row">
-		<c:forEach var="telefone" begin="1" end="1" items="${telefone}">
-		<input type="hidden" name="id_telefone2" value="${telefone.id_telefone}">
-			<c:choose>
-				<c:when test="${telefone.tipo=='Residencial'}">
-					<div class="form-group col-md-4">
-						<label for="tipo2">Tipo</label>
-						<select id="tipo2" name="tipo2" class="form-control">
-							<option selected>${telefone.tipo}</option>
-							<option>Celular</option>
-							<option>Comercial</option>
-						</select>
+		<c:if test="${requestScope.existeTelefone eq('ok') }">
+			<input type="hidden" name="tel" value="editar">
+			<div class="form-row">
+				<c:forEach var="telefone" begin="1" end="1" items="${telefone}">
+					<input type="hidden" name="id_telefone2" value="${telefone.id_telefone}">
+					<c:choose>
+						<c:when test="${telefone.tipo=='Residencial'}">
+							<div class="form-group col-md-4">
+								<label for="tipo2">Tipo</label>
+								<select id="tipo2" name="tipo2" class="form-control">
+									<option selected>${telefone.tipo}</option>
+									<option>Celular</option>
+									<option>Comercial</option>
+								</select>
+							</div>
+						</c:when>
+						<c:when test="${telefone.tipo=='Celular'}">
+							<div class="form-group col-md-4">
+								<label for="tipo2">Tipo</label>
+								<select id="tipo2" name="tipo2" class="form-control">
+									<option selected>${telefone.tipo}</option>
+									<option>Residencial</option>
+									<option>Comercial</option>
+								</select>
+							</div>
+						</c:when>
+						<c:when test="${telefone.tipo=='Comercial'}">
+							<div class="form-group col-md-4">
+								<label for="tipo2">Tipo</label>
+								<select id="tipo2" name="tipo2" class="form-control">
+									<option selected>${telefone.tipo}</option>
+									<option>Comercial</option>
+								</select>
+							</div>
+						</c:when>
+						<c:otherwise>
+							<div class="form-group col-md-4">
+								<label for="tipo2">Tipo</label>
+								<select id="tipo2" name="tipo2" class="form-control">
+									<option selected>Selecione...</option>
+									<option>Residencial</option>
+									<option>Celular</option>
+									<option>Comercial</option>
+								</select>
+							</div>
+						</c:otherwise>
+					</c:choose>
+				</c:forEach>
+				
+				<c:forEach var="telefone" begin="1" end="1" items="${telefone}">
+					<div class="form-group col-md-2">
+						<label for="ddd2">DDD</label>
+						<input type="text" class="form-control"id="ddd2" name="ddd2" maxlength="2" required onkeypress="return event.charCode >= 48 && event.charCode <= 57" value=
+							<c:out value="${telefone.ddd}"></c:out>>
 					</div>
-				</c:when>
-				<c:when test="${telefone.tipo=='Celular'}">
-					<div class="form-group col-md-4">
-						<label for="tipo2">Tipo</label>
-						<select id="tipo2" name="tipo2" class="form-control">
-							<option selected>${telefone.tipo}</option>
-							<option>Residencial</option>
-							<option>Comercial</option>
-						</select>
+				</c:forEach>
+				<c:forEach var="telefone" begin="1" end="1" items="${telefone}">
+					<div class="form-group col-md-6">
+						<label for="numero2">Número</label>
+						<input type="text" class="form-control" id="numero2" name="numero2" data-mask="00000-0000" data-mask-clearifnotmatch="true" maxlength="11" required onkeypress="return event.charCode >= 48 && event.charCode <= 57" value=
+							<c:out value="${telefone.numero}"></c:out>>
 					</div>
-				</c:when>
-				<c:when test="${telefone.tipo=='Comercial'}">
-					<div class="form-group col-md-4">
-						<label for="tipo2">Tipo</label>
-						<select id="tipo2" name="tipo2" class="form-control">
-							<option selected>${telefone.tipo}</option>
-							<option>Comercial</option>
-						</select>
-					</div>
-				</c:when>
-				<c:otherwise>
-					<div class="form-group col-md-4">
-						<label for="tipo2">Tipo</label>
-						<select id="tipo2" name="tipo2" class="form-control">
-							<option selected>Selecione...</option>
-							<option>Residencial</option>
-							<option>Celular</option>
-							<option>Comercial</option>
-						</select>
-					</div>
-				</c:otherwise>
-			</c:choose>
-		</c:forEach>
-			
-		<c:forEach var="telefone" begin="1" end="1" items="${telefone}">
-			<div class="form-group col-md-2">
-				<label for="ddd2">DDD</label>
-				<input type="text" class="form-control"id="ddd2" name="ddd2" maxlength="2" required onkeypress="return event.charCode >= 48 && event.charCode <= 57" value=
-					<c:out value="${telefone.ddd}"></c:out>>
+				</c:forEach>
 			</div>
-		</c:forEach>
-		<c:forEach var="telefone" begin="1" end="1" items="${telefone}">
-			<div class="form-group col-md-6">
-				<label for="numero2">Número</label>
-				<input type="text" class="form-control" id="numero2" name="numero2" data-mask="00000-0000" data-mask-clearifnotmatch="true" maxlength="11" required onkeypress="return event.charCode >= 48 && event.charCode <= 57" value=
-					<c:out value="${telefone.numero}"></c:out>>
-			</div>
-		</c:forEach>
-		</div>
+		</c:if>
+		
+		<c:if test="${requestScope.existeTelefone eq('erro')}">
+			<input type="hidden" name="tel" value="inserir">
+			<div id="telefone2"><input type="button" value="Inserir outro telefone" class="btn btn-outline-info" onclick="inserirTelefone2()"></div>
+			<br>
+		</c:if>
 		
 		<button type="submit" class="btn btn-success">Editar</button>
 	</form>
 </body>
 
+	<script type="text/javascript" src="js/ajax.js"></script>
 	<script type="text/javascript" src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
 	<script type="text/javascript" src="http://code.jquery.com/qunit/qunit-1.11.0.js"></script>
 	<script type="text/javascript" src="js/jquery.mask.js"></script>

@@ -117,6 +117,14 @@ public class ClienteController extends HttpServlet {
 				}
 				else
 				{
+					if(arrayTelefone.size() > 1)
+					{
+						request.setAttribute("existeTelefone", "ok");
+					}
+					else
+					{
+						request.setAttribute("existeTelefone", "erro");
+					}
 					request.getRequestDispatcher("views/editar.jsp").include(request, response);
 				}
 			} catch (SQLException e) {
@@ -246,6 +254,8 @@ public class ClienteController extends HttpServlet {
 				e.printStackTrace();
 			}
 		} else if (op.contentEquals("editar")) {
+			String inserir = request.getParameter("tel");
+			
 			ClienteDAO clienteDAO = new ClienteDAO();
 			TelefoneDAO telefoneDAO = new TelefoneDAO();
 
@@ -262,7 +272,7 @@ public class ClienteController extends HttpServlet {
 			telefone.setTipo(request.getParameter("tipo"));
 			telefone.setFk_id_cliente(Integer.parseInt(request.getParameter("id_cliente")));
 			
-			if(request.getParameter("tipo2") != null)
+			if(request.getParameter("tipo2") != null && inserir.equals("editar"))
 			{
 				Telefone telefone2 = new Telefone();
 				telefone2.setId_telefone(Integer.parseInt(request.getParameter("id_telefone2")));
@@ -273,6 +283,21 @@ public class ClienteController extends HttpServlet {
 				
 				try {
 					telefoneDAO.editarTelefone(telefone2);
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			else if(request.getParameter("tipo2") != null && inserir.equals("inserir"))
+			{
+				Telefone telefone2 = new Telefone();
+				telefone2.setDdd(Integer.parseInt(request.getParameter("ddd2")));
+				telefone2.setNumero(request.getParameter("numero2"));
+				telefone2.setTipo(request.getParameter("tipo2"));
+				telefone2.setFk_id_cliente(Integer.parseInt(request.getParameter("id_cliente")));
+				
+				try {
+					telefoneDAO.inserirTelefone(telefone2);
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
