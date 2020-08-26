@@ -49,7 +49,16 @@ public class ClienteController extends HttpServlet {
 			System.out.println("Inserir cliente.");
 			request.getRequestDispatcher("views/inserir.jsp").include(request, response);
 		} else if (op.contentEquals("menu")) {
-			request.getRequestDispatcher("views/menu.jsp").include(request, response);
+			HttpSession session = request.getSession(false);
+			
+			if (session.getAttribute("cliente") == null)
+			{
+				request.getRequestDispatcher("index.jsp").include(request, response);
+			}
+			else
+			{
+				request.getRequestDispatcher("views/menu.jsp").include(request, response);
+			}
 		} else if (op.contentEquals("index")) {
 			request.getRequestDispatcher("index.jsp").include(request, response);
 		} else if (op.contentEquals("listar")) {
