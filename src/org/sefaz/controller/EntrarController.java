@@ -64,7 +64,7 @@ public class EntrarController extends HttpServlet {
 				e.printStackTrace();
 			}
 			
-			HttpSession session=request.getSession();
+			HttpSession session = request.getSession();
           
     		if(cliente.getId_cliente() != 0)
     		{
@@ -78,6 +78,7 @@ public class EntrarController extends HttpServlet {
 					e.printStackTrace();
 				}
     			
+    			session.setAttribute("id_cliente", cliente.getId_cliente());
     			session.setAttribute("cliente", cliente);
     			session.setAttribute("saldo", saldo);
     			session.setAttribute("status", "ok");
@@ -85,8 +86,8 @@ public class EntrarController extends HttpServlet {
     		}  
     		else
     		{
-    			session.setAttribute("status", "erro");
-    			session.setAttribute("statusMsg", "E-mail ou senha incorreto.");
+    			request.setAttribute("status", "erro");
+    			request.setAttribute("statusMsg", "E-mail ou senha incorreto.");
     			request.getRequestDispatcher("index.jsp").include(request, response);  
     		}
     	}

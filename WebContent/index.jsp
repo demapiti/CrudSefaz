@@ -20,18 +20,6 @@
 
 	<h1>Autenticação de Cliente</h1>
 	
-	<c:if test="${sessionScope.status eq('erro')}">
-		<table>
-			<tr>
-				<td class="center-align">
-					<div class="alert alert-danger" role="alert">
-						<c:out value="${sessionScope.statusMsg}" />
-					</div>
-				</td>
-			</tr>
-		</table>
-	</c:if>
-	
 	<c:if test="${!empty requestScope.status}">
 		<table>
 			<tr>

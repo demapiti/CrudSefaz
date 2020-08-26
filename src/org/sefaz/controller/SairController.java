@@ -32,6 +32,7 @@ public class SairController extends HttpServlet {
 		//response.getWriter().append("Served at: ").append(request.getContextPath());
 		
 		HttpSession session = request.getSession();
+		session.removeAttribute("id_cliente");
 		session.removeAttribute("cliente");
 		session.removeAttribute("saldo");
 		session.setAttribute("status", "erro");

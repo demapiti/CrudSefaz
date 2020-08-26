@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.sefaz.conn.Conn;
 import org.sefaz.model.Telefone;
@@ -50,12 +52,13 @@ public class TelefoneDAO {
 		connection.setAutoCommit(false);
 		
 		try {
-			PreparedStatement statement = connection.prepareStatement("UPDATE telefone SET ddd=?, numero=?, tipo=? WHERE fk_id_cliente=?");
+			PreparedStatement statement = connection.prepareStatement("UPDATE telefone SET ddd=?, numero=?, tipo=? WHERE id_telefone=? AND fk_id_cliente=?");
 			
 			statement.setInt(1, telefone.getDdd());
 			statement.setString(2, telefone.getNumero());
 			statement.setString(3, telefone.getTipo());
-			statement.setInt(4, telefone.getFk_id_cliente());
+			statement.setInt(4, telefone.getId_telefone());
+			statement.setInt(5, telefone.getFk_id_cliente());
 
 			retorno = statement.executeUpdate() > 0;
 			connection.commit();
@@ -69,34 +72,35 @@ public class TelefoneDAO {
 		}
 		return retorno;
 	}
-
-	public Telefone listarTelefone(int id_cliente) throws SQLException
+	
+	public List<Telefone> listarTelefone(int id_cliente) throws SQLException
 	{
 		connection = fazerConn();
-		Telefone telefone = new Telefone();
 		
-		PreparedStatement statement = connection.prepareStatement("SELECT * FROM telefone WHERE fk_id_cliente=?");
-		statement.setInt(1, id_cliente);
-
-		ResultSet rset = statement.executeQuery();
+		List<Telefone> arrayTelefone = new ArrayList<>();
 		try {
-			if (rset.next()) {
-				telefone.setId_telefone(rset.getInt(1));
-				telefone.setDdd(rset.getInt(2));
-				telefone.setNumero(rset.getString(3));
-				telefone.setTipo(rset.getString(4));
-				telefone.setFk_id_cliente(rset.getInt(5));
-			}
+			PreparedStatement statement = connection.prepareStatement("SELECT * FROM telefone WHERE fk_id_cliente=?");
+			statement.setInt(1, id_cliente);
 
-			statement.close();
+			ResultSet rset = statement.executeQuery();
+			while (rset.next())
+			{
+				Telefone telefone = new Telefone();
+				telefone.setId_telefone(rset.getInt("id_telefone"));
+				telefone.setDdd(rset.getInt("ddd"));
+				telefone.setNumero(rset.getString("numero"));
+				telefone.setTipo(rset.getString("tipo"));
+				telefone.setFk_id_cliente(rset.getInt("fk_id_cliente"));
+				arrayTelefone.add(telefone);
+			}
 			rset.close();
+			statement.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
-		} finally {
+		} finally{
 			System.out.println("Fechando conexão...");
 			connection.close();
 		}
-		return telefone;
+		return arrayTelefone;
 	}
-
 }

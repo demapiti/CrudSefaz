@@ -48,7 +48,6 @@
 	
 	<form action="cliente" method="post">
 		<c:set var="cliente" value="${cliente}"></c:set>
-		<c:set var="telefone" value="${telefone}"></c:set>
 		<input type="hidden" name="op" value="editar">
 		<input type="hidden" name="id_cliente" value="${cliente.id_cliente}">
 		<div class="form-row">
@@ -67,6 +66,8 @@
 		</div>
 		
 		<div class="form-row">
+			<c:forEach var="telefone" begin="0" end="0" items="${telefone}">
+			<input type="hidden" name="id_telefone" value="${telefone.id_telefone}">
 			<c:choose>
 				<c:when test="${telefone.tipo=='Residencial'}">
 					<div class="form-group col-md-4">
@@ -109,15 +110,86 @@
 					</div>
 				</c:otherwise>
 			</c:choose>
+			</c:forEach>
 			<div class="form-group col-md-2">
 				<label for="ddd">DDD</label>
-				<input type="text" class="form-control" id="ddd" name="ddd" value="${telefone.ddd}" maxlength="2" required onkeypress="return event.charCode >= 48 && event.charCode <= 57">
+				<input type="text" class="form-control"id="ddd" name="ddd" maxlength="2" required onkeypress="return event.charCode >= 48 && event.charCode <= 57" value=
+				<c:forEach var="telefone" begin="0" end="0" items="${telefone}">
+					<c:out value="${telefone.ddd}"></c:out>
+				</c:forEach>>
 			</div>
 			<div class="form-group col-md-6">
 				<label for="numero">Número</label>
-				<input type="text" class="form-control" id="numero" name="numero" value="${telefone.numero}" data-mask="00000-0000" data-mask-clearifnotmatch="true" maxlength="11" required onkeypress="return event.charCode >= 48 && event.charCode <= 57">
+				<input type="text" class="form-control" id="numero" name="numero" data-mask="00000-0000" data-mask-clearifnotmatch="true" maxlength="11" required onkeypress="return event.charCode >= 48 && event.charCode <= 57" value=
+				<c:forEach var="telefone" begin="0" end="0" items="${telefone}">
+					<c:out value="${telefone.numero}"></c:out>
+				</c:forEach>>
 			</div>
 		</div>
+		
+		<div class="form-row">
+		<c:forEach var="telefone" begin="1" end="1" items="${telefone}">
+		<input type="hidden" name="id_telefone2" value="${telefone.id_telefone}">
+			<c:choose>
+				<c:when test="${telefone.tipo=='Residencial'}">
+					<div class="form-group col-md-4">
+						<label for="tipo2">Tipo</label>
+						<select id="tipo2" name="tipo2" class="form-control">
+							<option selected>${telefone.tipo}</option>
+							<option>Celular</option>
+							<option>Comercial</option>
+						</select>
+					</div>
+				</c:when>
+				<c:when test="${telefone.tipo=='Celular'}">
+					<div class="form-group col-md-4">
+						<label for="tipo2">Tipo</label>
+						<select id="tipo2" name="tipo2" class="form-control">
+							<option selected>${telefone.tipo}</option>
+							<option>Residencial</option>
+							<option>Comercial</option>
+						</select>
+					</div>
+				</c:when>
+				<c:when test="${telefone.tipo=='Comercial'}">
+					<div class="form-group col-md-4">
+						<label for="tipo2">Tipo</label>
+						<select id="tipo2" name="tipo2" class="form-control">
+							<option selected>${telefone.tipo}</option>
+							<option>Comercial</option>
+						</select>
+					</div>
+				</c:when>
+				<c:otherwise>
+					<div class="form-group col-md-4">
+						<label for="tipo2">Tipo</label>
+						<select id="tipo2" name="tipo2" class="form-control">
+							<option selected>Selecione...</option>
+							<option>Residencial</option>
+							<option>Celular</option>
+							<option>Comercial</option>
+						</select>
+					</div>
+				</c:otherwise>
+			</c:choose>
+		</c:forEach>
+			
+		<c:forEach var="telefone" begin="1" end="1" items="${telefone}">
+			<div class="form-group col-md-2">
+				<label for="ddd2">DDD</label>
+				<input type="text" class="form-control"id="ddd2" name="ddd2" maxlength="2" required onkeypress="return event.charCode >= 48 && event.charCode <= 57" value=
+					<c:out value="${telefone.ddd}"></c:out>>
+			</div>
+		</c:forEach>
+		<c:forEach var="telefone" begin="1" end="1" items="${telefone}">
+			<div class="form-group col-md-6">
+				<label for="numero2">Número</label>
+				<input type="text" class="form-control" id="numero2" name="numero2" data-mask="00000-0000" data-mask-clearifnotmatch="true" maxlength="11" required onkeypress="return event.charCode >= 48 && event.charCode <= 57" value=
+					<c:out value="${telefone.numero}"></c:out>>
+			</div>
+		</c:forEach>
+		</div>
+		
 		<button type="submit" class="btn btn-success">Editar</button>
 	</form>
 </body>

@@ -125,10 +125,10 @@ public class ClienteDAO {
 			while (rset.next())
 			{
 				Cliente cliente = new Cliente();
-				cliente.setId_cliente(rset.getInt(1));
-				cliente.setNome(rset.getString(2));
-				cliente.setEmail(rset.getString(3));
-				cliente.setSenha(rset.getString(4));
+				cliente.setId_cliente(rset.getInt("id_cliente"));
+				cliente.setNome(rset.getString("nome"));
+				cliente.setEmail(rset.getString("email"));
+				cliente.setSenha(rset.getString("senha"));
 				listaClientes.add(cliente);
 			}
 			statement.close();
@@ -154,10 +154,10 @@ public class ClienteDAO {
 			ResultSet rset = statement.executeQuery();
 			if (rset.next())
 			{
-				cliente.setId_cliente(rset.getInt(1));
-				cliente.setNome(rset.getString(2));
-				cliente.setEmail(rset.getString(3));
-				cliente.setSenha(rset.getString(4));
+				cliente.setId_cliente(rset.getInt("id_cliente"));
+				cliente.setNome(rset.getString("nome"));
+				cliente.setEmail(rset.getString("email"));
+				cliente.setSenha(rset.getString("senha"));
 			}
 			statement.close();
 			rset.close();
@@ -184,10 +184,10 @@ public class ClienteDAO {
 			ResultSet rset = statement.executeQuery();
 			if (rset.next())
 			{
-				cliente.setId_cliente(rset.getInt(1));
-				cliente.setNome(rset.getString(2));
-				cliente.setEmail(rset.getString(3));
-				cliente.setSenha(rset.getString(4));
+				cliente.setId_cliente(rset.getInt("id_cliente"));
+				cliente.setNome(rset.getString("nome"));
+				cliente.setEmail(rset.getString("email"));
+				cliente.setSenha(rset.getString("senha"));
 			}
 			statement.close();
 			rset.close();

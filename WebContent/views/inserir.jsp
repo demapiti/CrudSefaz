@@ -91,10 +91,13 @@
 				<input type="text" class="form-control" id="numero" name="numero" maxlength="11" required onkeypress="return event.charCode >= 48 && event.charCode <= 57 && ($(this).mask('00000-0000'))">
 			</div>
 		</div>
+		<div id="telefone2"><input type="button" value="Inserir outro telefone" class="btn btn-outline-info" onclick="inserirTelefone2()"></div>
+		<br>
 		<button type="submit" class="btn btn-success">Cadastrar</button>
 	</form>
 </body>
 
+	<script type="text/javascript" src="js/ajax.js"></script>
 	<script type="text/javascript" src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
 	<script type="text/javascript" src="http://code.jquery.com/qunit/qunit-1.11.0.js"></script>
 	<script type="text/javascript" src="js/jquery.mask.js"></script>

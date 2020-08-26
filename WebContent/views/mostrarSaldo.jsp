@@ -24,7 +24,7 @@
 </tr>
 <tr>
 	<td>
-		<div class="alert alert-secondary" role="alert">
+	<div class="alert alert-secondary" role="alert">
 			O seu saldo é: R$ <c:out value="${sessionScope.saldo.saldo}" />.
 		</div>
 	</td>

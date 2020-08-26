@@ -63,7 +63,6 @@
 			</tr>
 		</thead>
 		
-		<c:set var="telefone" value="${telefone}"></c:set>
 		<c:set var="saldo" value="${saldo}"></c:set>
 
 		<tbody>
@@ -72,9 +71,21 @@
 					<th scope="row"><c:out value="${cliente.nome}"></c:out></th>
 					<td><c:out value="${cliente.email}"></c:out></td>
 					<td><c:out value="R$ ${saldo[loopCliente.index].saldo}"></c:out></td>
-					<td><c:out value="${telefone[loopCliente.index].ddd}"></c:out></td>
-					<td><c:out value="${telefone[loopCliente.index].numero}"></c:out></td>
-					<td><c:out value="${telefone[loopCliente.index].tipo}"></c:out></td>
+					<td>
+						<c:forEach var="telefone" items="${telefone[loopCliente.index]}">
+							<c:out value="${telefone.ddd}"></c:out><br>
+						</c:forEach>
+					</td>
+					<td>
+						<c:forEach var="telefone" items="${telefone[loopCliente.index]}">
+							<c:out value="${telefone.numero}"></c:out><br>
+						</c:forEach>
+					</td>
+					<td>
+						<c:forEach var="telefone" items="${telefone[loopCliente.index]}">
+							<c:out value="${telefone.tipo}"></c:out><br>
+						</c:forEach>
+					</td>
 					<td><a href="cliente?op=editar&id_cliente=<c:out value="${cliente.id_cliente}"></c:out>">Editar</a></td>
 					<td><a href="cliente?op=saldo&id_cliente=<c:out value="${cliente.id_cliente}"></c:out>">Adicionar</a></td>
 					<c:if test="${!empty sessionScope['cliente']}">

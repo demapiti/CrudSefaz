@@ -65,19 +65,19 @@ public class ClienteController extends HttpServlet {
 			ClienteDAO clienteDAO = new ClienteDAO();
 			List<Cliente> lista = new ArrayList<>();
 			TelefoneDAO telefoneDAO = new TelefoneDAO();
-			List<Telefone> telefone = new ArrayList<>();
+			List<ArrayList<Telefone>> arrayTelefone = new ArrayList<>();
 			SaldoDAO saldoDAO = new SaldoDAO();
 			List<Saldo> saldo = new ArrayList<>();
 
 			try {
 				lista = clienteDAO.listarClientes();
 				for (Cliente cliente : lista) {
-					telefone.add(telefoneDAO.listarTelefone(cliente.getId_cliente()));
+					arrayTelefone.add((ArrayList<Telefone>) telefoneDAO.listarTelefone(cliente.getId_cliente()));
 					saldo.add(saldoDAO.listarSaldo(cliente.getId_cliente()));
 				}
-
+				
 				request.setAttribute("lista", lista);
-				request.setAttribute("telefone", telefone);
+				request.setAttribute("telefone", arrayTelefone);
 				request.setAttribute("saldo", saldo);
 				
 				HttpSession session = request.getSession(false);
@@ -99,15 +99,15 @@ public class ClienteController extends HttpServlet {
 			System.out.println("Editar id: " + id_cliente);
 
 			ClienteDAO clienteDAO = new ClienteDAO();
-			Cliente c = new Cliente();
+			Cliente cliente = new Cliente();
 			TelefoneDAO telefoneDAO = new TelefoneDAO();
-			Telefone telefone = new Telefone();
+			List<Telefone> arrayTelefone = new ArrayList<>();
 
 			try {
-				c = clienteDAO.listarCliente(id_cliente);
-				telefone = telefoneDAO.listarTelefone(c.getId_cliente());
-				request.setAttribute("cliente", c);
-				request.setAttribute("telefone", telefone);
+				cliente = clienteDAO.listarCliente(id_cliente);
+				arrayTelefone = telefoneDAO.listarTelefone(cliente.getId_cliente());
+				request.setAttribute("cliente", cliente);
+				request.setAttribute("telefone", arrayTelefone);
 				
 				HttpSession session = request.getSession(false);
 				
@@ -127,15 +127,16 @@ public class ClienteController extends HttpServlet {
 			System.out.println("Adicionar saldo ao id: " + id_cliente);
 
 			ClienteDAO clienteDAO = new ClienteDAO();
-			Cliente c = new Cliente();
+			Cliente cliente = new Cliente();
 			SaldoDAO saldoDAO = new SaldoDAO();
 			Saldo saldo = new Saldo();
 
 			try {
-				c = clienteDAO.listarCliente(id_cliente);
-				saldo = saldoDAO.listarSaldo(c.getId_cliente());
-				request.setAttribute("cliente", c);
+				cliente = clienteDAO.listarCliente(id_cliente);
+				saldo = saldoDAO.listarSaldo(cliente.getId_cliente());
+				request.setAttribute("cliente", cliente);
 				request.setAttribute("saldo", saldo);
+				
 				HttpSession session = request.getSession(false);
 				
 				if (session.getAttribute("cliente") == null)
@@ -163,7 +164,16 @@ public class ClienteController extends HttpServlet {
 				{
 					clienteDAO.deletar(id_cliente);
 					System.out.println("Cliente deletado com sucesso!");
-					request.getRequestDispatcher("cliente?op=listar").include(request, response);
+					if(id_cliente == Integer.parseInt(session.getAttribute("id_cliente").toString()))
+					{
+						request.setAttribute("status", "erro");
+						request.setAttribute("statusMsg", "Ops! Parece que você deletou o seu próprio usuário.");
+						request.getRequestDispatcher("sair").include(request, response);
+					}
+					else
+					{
+						request.getRequestDispatcher("cliente?op=listar").include(request, response);
+					}
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -201,6 +211,16 @@ public class ClienteController extends HttpServlet {
 					telefone.setFk_id_cliente(fk_cliente);
 
 					telefoneDAO.inserirTelefone(telefone);
+					
+					if(request.getParameter("tipo2") != null)
+					{
+						telefone.setDdd(Integer.parseInt(request.getParameter("ddd2")));
+						telefone.setNumero(request.getParameter("numero2"));
+						telefone.setTipo(request.getParameter("tipo2"));
+						telefone.setFk_id_cliente(fk_cliente);
+
+						telefoneDAO.inserirTelefone(telefone);
+					}
 
 					request.setAttribute("status", "ok");
 					request.setAttribute("statusMsg", "Cliente inserido com sucesso!");
@@ -236,10 +256,28 @@ public class ClienteController extends HttpServlet {
 			cliente.setSenha(request.getParameter("senha"));
 
 			Telefone telefone = new Telefone();
+			telefone.setId_telefone(Integer.parseInt(request.getParameter("id_telefone")));
 			telefone.setDdd(Integer.parseInt(request.getParameter("ddd")));
 			telefone.setNumero(request.getParameter("numero"));
 			telefone.setTipo(request.getParameter("tipo"));
 			telefone.setFk_id_cliente(Integer.parseInt(request.getParameter("id_cliente")));
+			
+			if(request.getParameter("tipo2") != null)
+			{
+				Telefone telefone2 = new Telefone();
+				telefone2.setId_telefone(Integer.parseInt(request.getParameter("id_telefone2")));
+				telefone2.setDdd(Integer.parseInt(request.getParameter("ddd2")));
+				telefone2.setNumero(request.getParameter("numero2"));
+				telefone2.setTipo(request.getParameter("tipo2"));
+				telefone2.setFk_id_cliente(Integer.parseInt(request.getParameter("id_cliente")));
+				
+				try {
+					telefoneDAO.editarTelefone(telefone2);
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
 
 			try {
 				clienteDAO.editar(cliente);

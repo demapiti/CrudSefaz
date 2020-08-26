@@ -95,9 +95,9 @@ public class SaldoDAO {
 		try {
 			if (rset.next())
 			{
-				saldo.setId_saldo(rset.getInt(1));
-				saldo.setSaldo(rset.getFloat(2));
-				saldo.setFk_id_cliente(rset.getInt(3));
+				saldo.setId_saldo(rset.getInt("id_saldo"));
+				saldo.setSaldo(rset.getFloat("saldo"));
+				saldo.setFk_id_cliente(rset.getInt("fk_id_cliente"));
 			}
 
 			statement.close();
